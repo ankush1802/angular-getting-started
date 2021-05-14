@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { IProduct } from "./products";
 
 @Component({
-    selector:"pm-products",
+    // selector:"pm-products",
     templateUrl: './product-list.component.html',
     styleUrls:['./product-list.component.css']
   })
@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit, OnDestroy
     imageMargin: number = 2;
     showImage : boolean = false;
     // listFilter :string = '';
+    errorMessage = '';
 
     private _listFilter = '';
   get listFilter(): string {
@@ -38,9 +39,12 @@ export class ProductListComponent implements OnInit, OnDestroy
     }
 
     ngOnInit(): void {
-     console.log("ngOnInit Fired!!");
-    this.products = this.productService.getProducts();
-     this.filteredProducts = this.products;
+     //console.log("ngOnInit Fired!!");
+    this.productService.getProducts().subscribe(
+        products => this.products =this.filteredProducts = products
+
+    );
+
     }
   
     ngOnDestroy(): void {
